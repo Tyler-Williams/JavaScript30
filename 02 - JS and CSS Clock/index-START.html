@@ -62,12 +62,35 @@
       background:black;
       position: absolute;
       top:50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1)
     }
 
   </style>
 
   <script>
+    const secondHand = document.querySelector('.second-hand')
+    const minuteHand = document.querySelector('.min-hand')
+    const hourHand = document.querySelector('.hour-hand')
 
+    setInterval(updateClock, 1000) // update clock every second
+
+    function updateClock () {
+      const now = new Date() //get the current time 
+      const secondAngle = now.getSeconds() * 6 + 90 // get time in seconds and convert to degres, then offset by 90deg for vertical starting position
+      const minuteAngle = now.getMinutes() * 6 + 90 // get time in minutes and convert to degres, then offset by 90deg for vertical starting position
+      const hourAngle = now.getHours() * 30 + 90   // get time in hours and convert to degres, then offset by 90deg for vertical starting position
+      
+      setElementAngle(secondHand, secondAngle)
+      setElementAngle(minuteHand, minuteAngle)
+      setElementAngle(hourHand, hourAngle)
+    }
+
+    function setElementAngle(element, deg) {
+      element.style.transform = `rotate(${deg}deg)`
+    }
 
   </script>
 </body>
