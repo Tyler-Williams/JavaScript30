@@ -6,7 +6,69 @@
 </head>
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
+
 <script>
+  // Name the canvas and canvas context
+  const canvas = document.querySelector('#draw')
+  const ctx = canvas.getContext('2d')
+
+  // Set Canvas size to window size
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight
+
+  // Add Events sto start drawing when the mouse is down and moving
+  canvas.addEventListener('mousemove', draw)
+  canvas.addEventListener('mousedown', (e) => {
+    isDrawing = true
+    setLastXY(e)
+    })
+  canvas.addEventListener('mouseup', () => isDrawing = false)
+  canvas.addEventListener('mouseout', () => isDrawing = false)
+
+  // Initialize our line style
+  ctx.strokeStyle = '#BADA55'
+  ctx.lineJoin = 'round'
+  ctx.lineCap = 'round'
+  ctx.lineWidth = 10
+
+  // Initialize global variables
+  let isDrawing = false 
+  let lastX = 0
+  let lastY = 0
+  let hue = 0
+  let direction = true // Grow line width if true
+
+  // Draws on the canvas using the mouse position, changes size and color for each line drawn
+  function draw (e) {
+    if (!isDrawing) return
+    console.log(e)
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`
+    ctx.beginPath()
+    ctx.moveTo(lastX, lastY)
+    ctx.lineTo(e.offsetX, e.offsetY)
+    ctx.stroke()
+
+    // Use the mouse position to set starting line point
+    setLastXY(e)
+
+    // Change the line color each time a line is drawn
+    hue = hue + 1 >= 360 ? 0 : hue += 1
+
+    // Change weather line is shrinking or growing depending on size
+    direction = ctx.lineWidth + 1 >= 100 || ctx.lineWidth - 1 <= 1 ? !direction : direction
+
+    if (direction) {
+      ctx.lineWidth++
+    } else {
+      ctx.lineWidth--
+    }
+  }
+
+  function setLastXY (e) {
+    lastX = e.offsetX
+    lastY = e.offsetY
+  }
+
 </script>
 
 <style>
