@@ -62,6 +62,7 @@ const bands = [
   ];
 
 const bandsList = document.querySelector('#bands')
+// MY CODE
 
 //  FUNCTIONS
 function sortArray (arr) {
@@ -80,13 +81,25 @@ function sortArray (arr) {
 }
 
 function displayList (list, parent) {
-  parent.innerHTML = list.map(item => {
-    return `<li>${item}</item>`
-  });
+  parent.innerHTML = list
+    .map(item => `<li>${item}</item>`)
 }
 
-displayList(sortArray(bands), bandsList)
+//displayList(sortArray(bands), bandsList)
+// END MY CODE
 
+//  TUTORIAL CODE
+const sortedBands = bands.sort((a, b) => strip(a) - strip(b))
+
+function strip (bandName) {
+  return bandName.replace(/^(a |the |an)/i, '').trim()
+}
+
+document.querySelector('#bands').innerHTML = 
+  sortedBands
+    .map(band => `<li>${band}</li>`)
+    .join('')
+//  END TUTORIAL CODE
 </script>
 
 </body>
