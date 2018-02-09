@@ -44,8 +44,48 @@
   <ul id="bands"></ul>
 
 <script>
-const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+  //  GLOBALS
+const bands = [
+  'The Plot in You',
+  'The Devil Wears Prada',
+  'Pierce the Veil',
+  'Norma Jean',
+  'The Bled',
+  'Say Anything',
+  'The Midway State',
+  'We Came as Romans',
+  'Counterparts',
+  'Oh, Sleeper',
+  'A Skylit Drive',
+  'Anywhere But Here',
+  'An Old Dog'
+  ];
 
+const bandsList = document.querySelector('#bands')
+
+//  FUNCTIONS
+function sortArray (arr) {
+  return arr.sort((first, seccond) => {
+    let a = first.startsWith('The ') ? first.substring(4) : first.startsWith('An ') ? first.substring(3) : first.startsWith('A ') ? first.substring(2) : first
+    let b = seccond.startsWith('The ') ? seccond.substring(4) : seccond.startsWith('An ') ? seccond.substring(3) : seccond.startsWith('A ') ? seccond.substring(2) : seccond
+
+    const length = a.length < b.length ? a.length : b.length
+
+    for (let i = 0; i < length; i++){
+      if (a.charCodeAt(i) != b.charCodeAt(i)){
+        return a.charCodeAt(i) - b.charCodeAt(i)
+      }
+    }
+  })
+}
+
+function displayList (list, parent) {
+  parent.innerHTML = list.map(item => {
+    return `<li>${item}</item>`
+  });
+}
+
+displayList(sortArray(bands), bandsList)
 
 </script>
 
