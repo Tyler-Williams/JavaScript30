@@ -4,38 +4,101 @@
   <meta charset="UTF-8">
   <title>Get User Media Code Along!</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 </head>
 <body>
 
-  <div class="photobooth">
-    <div class="controls">
-      <button onClick="takePhoto()">Take Photo</button>
-       <div class="rgb">
-        <label for="rmin">Red Min:</label>
-        <input type="range" min=0 max=255 name="rmin">
-        <label for="rmax">Red Max:</label>
-        <input type="range" min=0 max=255 name="rmax">
+  <div class="photobooth container">
+    <div class="row">
+      <div class="controls col s6">
+        <div class="rgb">
+          <p class="range-field">
+            <label for="rmin">Red Min:</label>
+            <input type="range" min=0 max=255 name="rmin" disabled>
+          </p>
+          <p class="range-field">
+            <label for="rmax">Red Max:</label>
+            <input type="range" min=0 max=255 name="rmax" disabled>
+          </p>
 
-        <br>
+          <p class="range-field">
+            <label for="gmin">Green Min:</label>
+            <input type="range" min=0 max=255 name="gmin" disabled>
+          </p>
+          <p class="range-field">
+            <label for="gmax">Green Max:</label>
+            <input type="range" min=0 max=255 name="gmax" disabled>
+          </p>
 
-        <label for="gmin">Green Min:</label>
-        <input type="range" min=0 max=255 name="gmin">
-        <label for="gmax">Green Max:</label>
-        <input type="range" min=0 max=255 name="gmax">
-
-        <br>
-
-        <label for="bmin">Blue Min:</label>
-        <input type="range" min=0 max=255 name="bmin">
-        <label for="bmax">Blue Max:</label>
-        <input type="range" min=0 max=255 name="bmax">
+          <p class="range-field">
+            <label for="bmin">Blue Min:</label>
+            <input type="range" min=0 max=255 name="bmin" disabled>
+            </p>
+          <p class="range-field">
+            <label for="bmax">Blue Max:</label>
+            <input type="range" min=0 max=255 name="bmax" disabled>
+          </p>
+        </div>
+      </div>      
+      <div class="col s6 extras">
+        <div class="row">
+            <div class="col s6">
+              <form action="#">
+                <p class="radio-group">
+                  <input name="group1" type="radio" id="default" checked/>
+                  <label for="test1">Default Source</label>
+                </p>
+                <p class="radio-group">
+                  <input name="group1" type="radio" id="custom"/>
+                  <label for="test2">Custom Source</label>
+                </p>
+                <p class="radio-group">
+                  <input name="group1" type="radio" id="webcam"/>
+                  <label for="test3">Webcam</label>
+                </p>
+              </form>
+            </div>
+            <div class="col s6">              
+              <video class="player" crossOrigin="Anonymous"></video>
+            </div>
+          </div>
+        <div class="row mb-0">
+          <div class="input-field col s12">
+            <select id="effectSelector" name="effectSelector">
+              <option value="0" selected>No Effect</option>
+              <option value="1">Red Effect</option>
+              <option value="2">Green Effect</option>
+              <option value="3">Blue Effect</option>
+              <option value="4">Black and White</option>
+              <option value="5">Pink and Green</option>
+              <option value="6">Negative Effect</option>
+              <option value="7">RGB Split Effect</option>
+              <option value="8">Green Screen Effect</option>
+            </select>
+            <label>Effect Select</label>
+          </div>
+        </div>
+          <div class="row mb-0">
+            <div class="input-field col s12">
+              <input 
+                value="https://player.vimeo.com/external/194837908.sd.mp4?s=c350076905b78c67f74d7ee39fdb4fef01d12420&profile_id=164" 
+                id="extermalVideo" 
+                type="text" 
+                class="validate">
+              <label class="active" for="extermalVideo">External Video Link</label>
+            </div>
+          </div>
+          <div class="row mb-0">
+            <a class="waves-effect waves-light btn" onclick="takePhoto()"><i class="material-icons left">camera_alt</i>Take Photo</a>
+          </div>          
+        </div>
       </div>
-    </div>
-
-    <canvas class="photo"></canvas>
-    <video class="player" crossOrigin="Anonymous"></video>
-    <div class="strip"></div>
-  </div>
+        <canvas class="photo"></canvas>
+        <div class="strip"></div>  
+      </div>
 
   <audio class="snap" src="http://wesbos.com/demos/photobooth/snap.mp3" hidden></audio>
 
