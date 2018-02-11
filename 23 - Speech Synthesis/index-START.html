@@ -23,18 +23,54 @@
 
       <input name="pitch" type="range" min="0" max="2" step="0.1">
       <textarea name="text">Hello! I love JavaScript 👍</textarea>
-      <button id="stop">Stop!</button>
       <button id="speak">Speak</button>
+      <button id="stop">Stop!</button>
+      
 
     </div>
 
 <script>
+  //  GLOBALS
   const msg = new SpeechSynthesisUtterance();
   let voices = [];
   const voicesDropdown = document.querySelector('[name="voice"]');
   const options = document.querySelectorAll('[type="range"], [name="text"]');
   const speakButton = document.querySelector('#speak');
   const stopButton = document.querySelector('#stop');
+
+  msg.text = document.querySelector('[name="text"]').value
+
+  //  EVENTS
+  speechSynthesis.addEventListener('voiceschanged', populateVoices)
+  voicesDropdown.addEventListener('change', setVoice)
+  speakButton.addEventListener('click', toggle)
+  stopButton.addEventListener('click', () => toggle(false))
+  options.forEach(option => option.addEventListener('change', setOption))
+
+  //  FUNCTIONS
+  function populateVoices () {
+    voices = this.getVoices().filter(voice => voice.lang.includes('en'))
+
+    voicesDropdown.innerHTML = voices
+      .map(voice => `<option value="${voice.name}">${voice.name} (${voice.lang})</option>`)
+      .join('')      
+  }
+
+  function setVoice () {
+    msg.voice = voices.find(voice => voice.name === this.value)
+    toggle()
+  }
+
+  function toggle (startOver = true) {
+    speechSynthesis.cancel()
+    if (startOver) speechSynthesis.speak(msg)
+  }
+
+  function setOption () {
+    msg[this.name] = this.value
+    toggle()
+  }
+
 </script>
 
 </body>
