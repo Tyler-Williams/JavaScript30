@@ -33,9 +33,59 @@
   </div>
 
 <script>
+  //  GLOBALS
   const holes = document.querySelectorAll('.hole');
   const scoreBoard = document.querySelector('.score');
   const moles = document.querySelectorAll('.mole');
+
+  const gameLength = 10 //  Time in seconds
+  let previousHole
+  let timeUp = false
+  let score = 0
+
+  //  EVENTS
+  moles.forEach(mole => mole.addEventListener('click', boop))
+
+  //  FUNCTIONS
+  function randomTime (minimum, maximum) {
+    return Math.round(Math.random() * (maximum - minimum) + minimum)
+  }
+
+  function randomHole (holes) {
+    const index = Math.floor(Math.random() * holes.length)
+    const hole = holes[index]
+
+    if (index === previousHole) {
+      return randomHole(holes)
+    }
+    return hole
+  }
+
+  function peek () {
+    const time = randomTime(200, 1000)
+    const hole = randomHole(holes)
+    hole.classList.add('up')
+
+    setTimeout(() => {
+      hole.classList.remove('up')
+      if (!timeUp) peek()
+    }, time)
+  }
+
+  function startGame () {
+    scoreBoard.textContent = 0
+    score = 0
+    timeUp = false
+    peek()
+    setTimeout(() => timeUp = true, gameLength * 1000)
+  }
+
+  function boop (e) {
+    if (!e.isTrusted) return  //  CHEATER
+    score++
+    this.classList.remove('up')
+    scoreBoard.textContent = score
+  }
 
 </script>
 </body>
